@@ -2,10 +2,10 @@
   "name": "conference-track-management",
   "version": "1.0.0",
   "description": "Conference Track Management",
-  "main": "app.js",
+  "main": "application.js",
   "scripts": {
-    "app": "node app.js",
-    "start": "node app.js",
+    "app": "node application.js",
+    "start": "node application.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

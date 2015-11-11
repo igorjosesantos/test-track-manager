@@ -1,6 +1,6 @@
 // schedule.js
 // ========
-var Track = require(__dirname + '/model/track.js');
+var Track = register('/models/track.js');
 
 var Schedule = function Schedule() {
     this.talks = [];
@@ -24,6 +24,8 @@ Schedule.prototype = {
         return this;
     },
     setSchedule: function(schedule) {
+
+
         this.schedule.push(schedule);
         return this;
     },
@@ -33,12 +35,16 @@ Schedule.prototype = {
     },
     generateSchedule: function() {
         var self = this;
-        self.talks.forEach( function (talk) {
-            self.setSchedule({
-                time: new Date,
-                title: talk.getTitle(),
-                duration: talk.getDuration()
-            });
+
+        this.talks.forEach( function (talk) {
+
+            // self.setSchedule({
+            //     hours: new Date(),
+            //     title: talk.getTitle(),
+            //     time: talk.getTime(),
+            //     duration: talk.getDuration()
+            // });
+
         });
         return this;
     }

@@ -2,8 +2,9 @@
 // ========
 var fs       = require('fs');
 var readline = require('readline');
-var Talk     = require(__dirname + '/model/talk.js');
-var Schedule = require(__dirname + '/model/schedule.js');
+
+var Talk     = register('/models/talk.js');
+var Schedule = register('/models/schedule.js');
 
 var DataFileReader = {
     read: function (filename) {
@@ -11,7 +12,7 @@ var DataFileReader = {
         var stream  = fs.createReadStream(filename, opts);
         var reader  = readline.createInterface({ input: stream });
 
-        var Schedule = new Schedule();
+        var Scheduler = new Schedule();
 
         stream.on('error', function(err) {
             stream.close();
@@ -19,12 +20,12 @@ var DataFileReader = {
         });
 
         stream.on('end', function () {
-            Schedule.generateSchedule().getSchedule();
+            Scheduler.generateSchedule().getSchedule();
             stream.close();
         });
 
         reader.on('line', function (line) {
-            Schedule.addTalk( new Talk( line ) );
+            Scheduler.addTalk( new Talk( line ) );
         });
     }
 }
