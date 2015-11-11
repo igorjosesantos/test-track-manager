@@ -61,20 +61,17 @@
 
     // configuration and load dependencies
     // ================================================
-    var DataFileReader  = register('/helpers/dataFileReader.js');
-    var InputValidation = register('/helpers/inputValidation.js');
+    var InputValidator = register('/helpers/inputValidator.js');
+    var AppWorker  = register('/helpers/appWorker.js');
 
     // listen (start app with "node application.js data.txt")
     // ================================================
     function Run () {
-
         console.log('\nRunning application...\n');
 
-        InputValidation.check( process ); // Validate input arguments
+        InputValidator.check( process ); // Validate input arguments
 
-        DataFileReader.read( process.argv[2] ); // Read the file and organize contents.
-
-        console.log('\nDone!\n');
+        AppWorker.run( process.argv[2] ); // Read the file and organize contents.
     }
 
     Run();

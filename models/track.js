@@ -1,37 +1,17 @@
 // track.js
 // ========
-var Track = function Track(name, duration) {
-    this.trackName = name;
-    this.trackSchedules = [];
+var Track = function Track(number, schedule) {
+    this.name = 'Track '+ number;
+    this.schedule = schedule.join('\n');
 
     if ( !(this instanceof Track) ) {
-        return new Track(name, duration);
+        return new Track(number, schedule);
     }
 };
 
 Track.prototype = {
-    setName: function(trackName) {
-        this.trackName = trackName;
-    },
-    addTalk: function(talkDescription) {
-        this.trackSchedules.push(talkDescription);
-    },
-    getInfo: function() {
-        // Track 1:
-        // 09:00AM Writing Fast Tests Against Enterprise Rails 60min
-        // 09:00AM Writing Fast Tests Against Enterprise Rails 60min
-        // 10:00AM Overdoing it in Python 45min
-        // 10:45AM Lua for the Masses 30min
-        // 11:15AM Ruby Errors from Mismatched Gem Versions 45min
-        // 12:00PM Lunch
-        // 01:00PM Ruby on Rails: Why We Should Move On 60min
-        // 02:00PM Common Ruby Errors 45min
-        // 02:45PM Pair Programming vs Noise 45min
-        // 03:30PM Programming in the Boondocks of Seattle 30min
-        // 04:00PM Ruby vs. Clojure for Back-End Development 30min
-        // 04:30PM User Interface CSS in Rails Apps 30min
-        // 05:00PM Networking Event
-        return (this.name + ':\n' + this.trackSchedules.join('\n'));
+    toString: function() {
+        return (this.name + ':\n' + this.schedule + '\n');
     },
 
 };

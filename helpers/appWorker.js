@@ -1,4 +1,4 @@
-// dataFileReader.js
+// appWorker.js
 // ========
 var fs       = require('fs');
 var readline = require('readline');
@@ -6,8 +6,8 @@ var readline = require('readline');
 var Talk     = register('/models/talk.js');
 var Schedule = register('/models/schedule.js');
 
-var DataFileReader = {
-    read: function (filename) {
+var AppWorker = {
+    run: function (filename) {
         var opts    = { flags: 'r', encoding: 'utf8' };
         var stream  = fs.createReadStream(filename, opts);
         var reader  = readline.createInterface({ input: stream });
@@ -20,7 +20,8 @@ var DataFileReader = {
         });
 
         stream.on('end', function () {
-            Scheduler.generateSchedule().getSchedule();
+            Scheduler.generateSchedule();
+            Scheduler.showTracks();
             stream.close();
         });
 
@@ -29,4 +30,4 @@ var DataFileReader = {
         });
     }
 }
-module.exports = DataFileReader;
+module.exports = AppWorker;
