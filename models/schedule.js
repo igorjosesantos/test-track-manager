@@ -1,6 +1,6 @@
 // schedule.js
 // ========
-var Track = require(__dirname + '/app/model/track.js');
+var Track = require(__dirname + '/model/track.js');
 
 var Schedule = function Schedule() {
     this.talks = [];

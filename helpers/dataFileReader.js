@@ -2,8 +2,8 @@
 // ========
 var fs       = require('fs');
 var readline = require('readline');
-var Talk     = require(__dirname + '/app/model/talk.js');
-var Schedule = require(__dirname + '/app/model/schedule.js');
+var Talk     = require(__dirname + '/model/talk.js');
+var Schedule = require(__dirname + '/model/schedule.js');
 
 var DataFileReader = {
     read: function (filename) {

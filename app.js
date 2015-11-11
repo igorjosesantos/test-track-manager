@@ -1,9 +1,9 @@
 // Writing Fast Tests Against Enterprise Rails 60min | lightning
 (function () {
 
-    var Polyfill        = require(__dirname + '/app/helper/polyfill.js');
-    var DataFileReader  = require(__dirname + '/app/helper/dataFileReader.js');
-    var InputValidation = require(__dirname + '/app/helper/inputValidation.js');
+    var Polyfill        = require(__dirname + '/helper/polyfill.js');
+    var DataFileReader  = require(__dirname + '/helper/dataFileReader.js');
+    var InputValidation = require(__dirname + '/helper/inputValidation.js');
 
     // listen (start app with node app.js filename.txt)
     // ================================================
