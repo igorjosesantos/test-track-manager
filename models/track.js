@@ -1,4 +1,4 @@
-// track.js
+// Track.js
 // ========
 var Track = function Track(number, schedule) {
     this.name = 'Track '+ number;

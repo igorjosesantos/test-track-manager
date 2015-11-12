@@ -61,17 +61,17 @@
 
     // configuration and load dependencies
     // ================================================
-    var InputValidator = register('/helpers/inputValidator.js');
-    var AppWorker  = register('/helpers/appWorker.js');
+    var Validator = register('/helpers/Validator.js');
+    var Worker  = register('/controllers/Worker.js');
 
     // listen (start app with "node application.js data.txt")
     // ================================================
     function Run () {
-        console.log('\nRunning application...\n');
+        console.log('Running application...\n');
 
-        InputValidator.check( process ); // Validate input arguments
+        Validator.check( process ); // Validate input arguments
 
-        AppWorker.run( process.argv[2] ); // Read the file and organize contents.
+        new Worker( process ).start(); // Read the file and organize contents.
     }
 
     Run();

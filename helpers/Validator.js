@@ -1,6 +1,6 @@
-// inputValidator.js
+// Validator.js
 // ========
-var InputValidator = {
+var Validator = {
     check: function ( process ) {
         if (process.argv.length < 3) {
             console.error('\nA input file was not provided properly!');
@@ -9,4 +9,4 @@ var InputValidator = {
         }
     }
 }
-module.exports = InputValidator;
+module.exports = Validator;

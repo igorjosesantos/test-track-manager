@@ -1,4 +1,4 @@
-// appWorker.js
+// Worker.js
 // ========
 var fs       = require('fs');
 var readline = require('readline');
@@ -6,10 +6,14 @@ var readline = require('readline');
 var Talk     = register('/models/talk.js');
 var Schedule = register('/models/schedule.js');
 
-var AppWorker = {
-    run: function (filename) {
+var Worker = function Worker(process) {
+    this.filename = process.argv[2];
+};
+
+Worker.prototype = {
+    start: function () {
         var opts    = { flags: 'r', encoding: 'utf8' };
-        var stream  = fs.createReadStream(filename, opts);
+        var stream  = fs.createReadStream( this.filename, opts );
         var reader  = readline.createInterface({ input: stream });
 
         var Scheduler = new Schedule();
@@ -30,4 +34,4 @@ var AppWorker = {
         });
     }
 }
-module.exports = AppWorker;
+module.exports = Worker;

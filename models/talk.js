@@ -1,18 +1,18 @@
-// talk.js
+// Talk.js
 // ========
 var Talk = function Talk(description) {
-    this.talkDescription = description;
+    this.description = description;
 
     var regexMatch = null;
 
     regexMatch = description.split(/(\d+min|lightning)/);
-    this.talkTitle = Array.isArray(regexMatch) ? regexMatch[0].trim() : '';
+    this.title = Array.isArray(regexMatch) ? regexMatch[0].trim() : '';
 
     regexMatch = description.match(/(\d+min|lightning)/);
-    this.talkLength = Array.isArray(regexMatch) ? regexMatch[0] : '';
+    this.duration = Array.isArray(regexMatch) ? regexMatch[0] : '';
 
-    regexMatch = this.talkLength.split(/(min|lightning)/);
-    this.talkTime = Array.isArray(regexMatch) ? regexMatch[0] : 0;
+    regexMatch = this.duration.split(/(min|lightning)/);
+    this.time = Array.isArray(regexMatch) ? regexMatch[0] : 0;
 
     if ( !(this instanceof Talk) ) {
         return new Talk(description);
@@ -21,16 +21,16 @@ var Talk = function Talk(description) {
 
 Talk.prototype = {
     getTitle: function() {
-        return this.talkTitle;
+        return this.title;
     },
     getTime: function() {
-        return this.talkTime;
+        return this.time;
     },
     getDuration: function() {
-        return this.talkLength;
+        return this.duration;
     },
     getDescription: function() {
-        return this.talkDescription;
+        return this.description;
     }
 };
 
