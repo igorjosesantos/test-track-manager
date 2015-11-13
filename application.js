@@ -61,7 +61,7 @@
 
     // configuration and load dependencies
     // ================================================
-    var ScheduleWorker = register('/service/ScheduleWorker.js');
+    var ScheduleWorker = register('/services/ScheduleWorker.js');
     var InputValidator = register('/helpers/InputValidator.js');
 
     // listen (start app with "node application.js data.txt")

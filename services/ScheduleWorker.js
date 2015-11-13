@@ -42,7 +42,7 @@ ScheduleWorker.prototype = {
     },
 
     stop: function () {
-        this.Scheduler.generateSchedule().printSchedule();
+        this.Scheduler.generate().print();
     },
 
     openStream: function (opts) {
@@ -53,4 +53,5 @@ ScheduleWorker.prototype = {
         return readline.createInterface({ input: stream });
     }
 }
+
 module.exports = ScheduleWorker;
