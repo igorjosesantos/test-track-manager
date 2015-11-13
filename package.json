@@ -2,20 +2,20 @@
   "name": "conference-track-management",
   "version": "1.0.0",
   "description": "Conference Track Management",
-  "main": "application.js",
+  "main": "app.js",
   "scripts": {
-    "app": "node application.js",
-    "start": "node application.js",
+    "app": "node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/igorjsantos/track-manager.git"
+    "type": "",
+    "url": ""
   },
   "author": "Igor J. Santos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/igorjsantos/track-manager/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/igorjsantos/track-manager#readme"
+  "homepage": ""
 }

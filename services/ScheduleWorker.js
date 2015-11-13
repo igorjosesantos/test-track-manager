@@ -21,23 +21,23 @@ var ScheduleWorker = function ScheduleWorker(filename) {
 ScheduleWorker.prototype = {
 
     start: function () {
-        var worker = this;
+        var Worker = this;
 
-        worker.Reader.on('line', function (line) {
-            worker.Scheduler.addTalk( new Talk( line ) );
+        Worker.Reader.on('line', function (line) {
+            Worker.Scheduler.addTalk( new Talk( line ) );
         });
 
         // @throws Exception
-        worker.Stream.on('error', function(exception) {
-            worker.Stream.close();
+        Worker.Stream.on('error', function(exception) {
+            Worker.Stream.close();
 
             if (exception)
                 throw exception;
         });
 
-        worker.Stream.on('end', function () {
-            worker.Stream.close();
-            worker.stop();
+        Worker.Stream.on('end', function () {
+            Worker.Stream.close();
+            Worker.stop();
         });
     },
 

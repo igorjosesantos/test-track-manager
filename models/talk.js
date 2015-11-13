@@ -2,7 +2,7 @@
 // ========
 var Talk = function Talk( description ) {
     this.description = description;
-    this.duration = extractDuration( description );
+    this.duration = getTalkLength( description );
 
     if ( !(this instanceof Talk) ) {
         return new Talk(description);
@@ -10,7 +10,7 @@ var Talk = function Talk( description ) {
 
     // @private
     // @throws Exception
-    function extractDuration ( description ) {
+    function getTalkLength ( description ) {
         try {
             var match = description.match(/(\d+min|lightning)/);
             var duration = match[0].split(/min/);
@@ -26,9 +26,6 @@ Talk.prototype = {
     // @overwrite
     toString: function() {
         return this.description;
-    },
-    getDuration: function() {
-        return this.duration;
     }
 };
 

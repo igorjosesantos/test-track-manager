@@ -1,7 +1,7 @@
-// DateHelper.js
+// DateTime.js
 // ========
-var DateHelper = {
-    formatAs12hour: function ( date ) {
+var DateTime = {
+    format: function ( date ) {
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -15,16 +15,9 @@ var DateHelper = {
 
         return strTime;
     },
-    addMinutes: function (date, minutes) {
-        return new Date(date.getTime() + minutes*60*1000);
-    },
-    resetHour: function (date, hours) {
-        date.setHours(hours);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        return date;
-        // return new Date(date + hours*60*60*1000);
+    add: function ( date, minutes ) {
+        return new Date( date.getTime() + minutes*60*1000 );
     }
 }
 
-module.exports = DateHelper;
+module.exports = DateTime;
