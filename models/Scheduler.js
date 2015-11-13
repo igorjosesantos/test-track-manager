@@ -1,29 +1,29 @@
-// schedule.js
+// Scheduler.js
 // ========
-var Track = register('/models/track.js');
+var Track = register('/models/Track.js');
 
-var Schedule = function Schedule() {
-    this.talks = [];
-    this.tracks = [];
+var Scheduler = function Scheduler() {
     this.schedule = [];
+    this.tracks = [];
+    this.talks = [];
 
-    if ( !(this instanceof Schedule) ) {
-        return new Schedule();
+    if ( !(this instanceof Scheduler) ) {
+        return new Scheduler();
     }
 };
 
-Schedule.prototype = {
-    addTalk: function(talk) {
+Scheduler.prototype = {
+    addTalk: function( talk ) {
         this.talks.push(talk);
-        return this;
     },
-    showTracks: function() {
-        this.tracks.forEach( function (track) {
-            console.log( track.toString() );
-        });
+    printSchedule: function() {
+        console.log(this.talks);
+
+        for (var i = this.tracks.length - 1; i >= 0; i--) {
+            // console.log( this.tracks[i].toString() );
+        }
     },
     generateSchedule: function() {
-        // var self = this;
         var schedule = [
             '09:00AM Writing Fast Tests Against Enterprise Rails 60min',
             '10:00AM Overdoing it in Python 45min',
@@ -51,7 +51,9 @@ Schedule.prototype = {
         this.tracks.push( new Track(1, schedule) );
         this.tracks.push( new Track(2, schedule) );
         this.tracks.push( new Track(3, schedule) );
+
+        return this;
     }
 };
 
-module.exports = Schedule;
+module.exports = Scheduler;
