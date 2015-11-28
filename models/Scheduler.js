@@ -63,12 +63,15 @@ Scheduler.prototype = {
         for (var i = Scheduler.talks.length - 1; i >= 0; i--) {
 
             // Lunch Time
-            if (startTime.getHours() >= LunchBreak.starts && startTime.getHours() < LunchBreak.ends)
+            var breakTime = DateTime.add( startTime, Scheduler.talks[i].duration );
+            if (breakTime.getHours() >= LunchBreak.starts && breakTime.getHours() < LunchBreak.ends)
             {
+                breakTime.setMinutes(0);
                 // Schedule Lunch
-                Scheduler.addToSchedule( DateTime.format( startTime ), LunchBreak.description );
+                Scheduler.addToSchedule( DateTime.format( breakTime ), LunchBreak.description );
                 // Increase time based on event length
-                startTime = DateTime.add( startTime, LunchBreak.duration );
+                startTime.setMinutes(0);
+                startTime = DateTime.add( breakTime, LunchBreak.duration );
             }
 
             // Networking Time
@@ -91,6 +94,13 @@ Scheduler.prototype = {
             // Increase time based on Talk length
             startTime = DateTime.add( startTime, Scheduler.talks[i].duration );
         }
+
+        // If contain remaining talks, create another track.
+        if (Scheduler.schedule.length > 0) {
+            Scheduler.addTrack( new Track( ++Scheduler.trackSequence, Scheduler.schedule ) );
+            Scheduler.clearSchedule();
+        }
+
         return this;
     }
 };

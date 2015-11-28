@@ -17,7 +17,7 @@ var Talk = function Talk( description ) {
             return duration[0].replace(/(?:(^lightning))/, 5);
         }
         catch (exception) {
-            throw exception;
+            console.error("An error has occurs :: " + exception.message);
         }
     }
 };

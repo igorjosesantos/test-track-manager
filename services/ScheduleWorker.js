@@ -24,7 +24,9 @@ ScheduleWorker.prototype = {
         var Worker = this;
 
         Worker.Reader.on('line', function (line) {
-            Worker.Scheduler.addTalk( new Talk( line ) );
+            // Ignore blank lines
+            if (line.trim() !== '')
+                Worker.Scheduler.addTalk( new Talk( line ) );
         });
 
         // @throws Exception
@@ -32,7 +34,7 @@ ScheduleWorker.prototype = {
             Worker.Stream.close();
 
             if (exception)
-                throw exception;
+                console.error("An error has occurs :: " + exception.message);
         });
 
         Worker.Stream.on('end', function () {
