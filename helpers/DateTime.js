@@ -2,6 +2,7 @@
 // ========
 var DateTime = {
     format: function ( date ) {
+        // console.log(date);
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -16,7 +17,7 @@ var DateTime = {
         return strTime;
     },
     add: function ( date, minutes ) {
-        return new Date( date.getTime() + minutes*60*1000 );
+        return new Date( date.getTime() + (minutes*60*1000) );
     }
 }
 

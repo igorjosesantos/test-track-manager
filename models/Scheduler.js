@@ -1,5 +1,3 @@
-// Scheduler.js
-// ========
 var DateTime = register('/helpers/DateTime.js');
 var Track    = register('/models/Track.js');
 var Talk     = register('/models/Talk.js');
@@ -9,34 +7,63 @@ var Scheduler = function Scheduler() {
     this.schedule = [];
     this.tracks   = [];
     this.talks    = [];
-    this.date     = startDate();
+    this.baseDate = buildBaseDateTime();
+    this.startTime = buildBaseDateTime();
 
     if ( !(this instanceof Scheduler) ) {
         return new Scheduler();
     }
 
-    function startDate() {
+    function buildBaseDateTime() {
         var date = new Date();
-        // Start today at 9:00AM
         return new Date(date.getFullYear(), date.getMonth(), date.getDay(), 9, 0, 0, 0);
     }
 };
 
 Scheduler.prototype = {
-    addTalk: function( talk ) {
-        this.talks.push( talk );
+    addTalk: function(talk) {
+        this.talks.push(talk);
     },
-    addTrack: function( track ) {
-        this.tracks.push( track );
+    createTrack: function() {
+        this.tracks.push(new Track( ++this.trackSequence, this.schedule ));
     },
-    clearSchedule: function( talk ) {
+    clearSchedule: function(talk) {
         this.schedule = [];
     },
-    addToSchedule: function( time, talk ) {
-        this.schedule.push( time + ' ' + talk );
+    addToSchedule: function(talk) {
+        var newTalk = DateTime.format(this.startTime)+' '+ talk;
+        this.schedule.push(newTalk);
     },
-    getBaseDate: function() {
-        return this.date;
+    resetStartTime: function(onlyMinutes) {
+        if (onlyMinutes) {
+            this.startTime.setMinutes(0);
+        } else {
+            this.startTime = this.baseDate;
+        }
+    },
+    updateStartTime: function(minutesToAdd) {
+        this.startTime = this.addMinutes(minutesToAdd);
+    },
+    addMinutes: function(minutesToAdd) {
+        return DateTime.add(this.startTime, minutesToAdd);
+    },
+    checkAndScheduleLunch: function (talkDuration) {
+        this.updateStartTime(talkDuration);
+        if (this.startTime.getHours() >= 12 && this.startTime.getHours() < 13) {
+            this.resetStartTime(true);
+            this.addToSchedule('Lunch');
+            this.updateStartTime(60);
+        } else {
+            this.updateStartTime(-talkDuration);
+        }
+    },
+    checkAndScheduleNetworkingEvent: function (talkDuration) {
+        if (this.startTime.getHours() >= 16 && this.startTime.getHours() < 17) {
+            this.addToSchedule('Networking Event');
+            this.createTrack();
+            this.clearSchedule();
+            this.resetStartTime();
+        }
     },
     print: function() {
         for (var i in this.tracks) {
@@ -44,61 +71,19 @@ Scheduler.prototype = {
         }
     },
     generate: function() {
-        var Scheduler = this;
+        this.clearSchedule();
+        this.talks = this.talks.reverse();
 
-        var LunchBreak = {
-            duration: 60, starts: 12, ends: 13, description: 'Lunch'
-        };
-        var NetworkingEvent = {
-            duration: 60, starts: 16, ends: 17, description: 'Networking Event'
-        };
-
-        var startTime = Scheduler.getBaseDate();
-        // Clear the schedule to load for the first Track
-        Scheduler.clearSchedule();
-        // Reverse data to maintain input order
-        Scheduler.talks = Scheduler.talks.reverse();
-
-        // Do the dirty work...
-        for (var i = Scheduler.talks.length - 1; i >= 0; i--) {
-
-            // Lunch Time
-            var breakTime = DateTime.add( startTime, Scheduler.talks[i].duration );
-            if (breakTime.getHours() >= LunchBreak.starts && breakTime.getHours() < LunchBreak.ends)
-            {
-                breakTime.setMinutes(0);
-                // Schedule Lunch
-                Scheduler.addToSchedule( DateTime.format( breakTime ), LunchBreak.description );
-                // Increase time based on event length
-                startTime.setMinutes(0);
-                startTime = DateTime.add( breakTime, LunchBreak.duration );
-            }
-
-            // Networking Time
-            if (startTime.getHours() >= NetworkingEvent.starts && startTime.getHours() < NetworkingEvent.ends)
-            {
-                // Schedule Networking Time
-                Scheduler.addToSchedule( DateTime.format( startTime ), NetworkingEvent.description );
-                // Increase time based on event length
-                startTime = DateTime.add( startTime, NetworkingEvent.duration );
-                // Set the Track and clear others
-                Scheduler.addTrack( new Track( ++Scheduler.trackSequence, Scheduler.schedule ) );
-                // Clear the schedule for the next Track
-                Scheduler.clearSchedule();
-                // Reset Time For Loop
-                startTime = Scheduler.getBaseDate();
-            }
-
-            // Schedule Talks
-            Scheduler.addToSchedule( DateTime.format( startTime ), Scheduler.talks[i].description );
-            // Increase time based on Talk length
-            startTime = DateTime.add( startTime, Scheduler.talks[i].duration );
+        for (var i = this.talks.length - 1; i >= 0; i--) {
+            var talk = this.talks[i];
+            this.checkAndScheduleLunch(talk.duration);
+            this.checkAndScheduleNetworkingEvent(talk.duration);
+            this.addToSchedule(talk.description);
+            this.updateStartTime(talk.duration);
         }
 
-        // If contain remaining talks, create another track.
-        if (Scheduler.schedule.length > 0) {
-            Scheduler.addTrack( new Track( ++Scheduler.trackSequence, Scheduler.schedule ) );
-            Scheduler.clearSchedule();
+        if (this.schedule.length > 0) {
+            this.createTrack();
         }
 
         return this;

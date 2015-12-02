@@ -17,5 +17,8 @@
   "bugs": {
     "url": ""
   },
-  "homepage": ""
+  "homepage": "",
+  "devDependencies": {
+    "jasmine": "^2.3.2"
+  }
 }
