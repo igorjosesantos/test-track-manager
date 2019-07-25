@@ -19,6 +19,6 @@
   },
   "homepage": "",
   "devDependencies": {
-    "jasmine": "^2.3.2"
+    "jasmine": "^3.4.0"
   }
 }
